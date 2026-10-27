@@ -8,6 +8,60 @@ The key goal is to build, evaluate, and compare different classification algorit
 
 ---
 
+## Web application
+
+The repository now includes a Flask API and a Vite/React interface. The original
+notebook and CSV-formatted `Social_Network_Ads.xls` file are preserved as-is.
+
+### Prerequisites
+
+* Python 3.9 or newer
+* Node.js 18 or newer and npm
+
+### Start the Flask backend
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate       # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python app.py
+```
+
+The API is available at `http://127.0.0.1:5000`. It loads the `.xls` file with
+`pandas.read_csv()` because the file contains comma-separated values.
+
+### Start the React frontend
+
+In a second terminal:
+
+```bash
+npm install
+npm run dev
+```
+
+Open the Vite URL shown in the terminal (normally `http://localhost:5173`).
+Vite proxies `/api` requests to the Flask server. The interface includes live
+dataset analytics, model evaluation, a searchable dataset explorer, and a
+validated prediction form.
+
+### Original notebook
+
+The original analysis can be run with Jupyter after installing the notebook
+dependencies:
+
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn jupyter
+jupyter notebook social_ads_click_prediction.ipynb
+```
+
+### What this project can and cannot predict
+
+The models estimate the `Purchased` outcome from gender, age, and estimated
+salary. They do not measure actual social-media activity: the dataset contains
+no likes, shares, comments, impressions, clickstream events, or time spent
+viewing advertisements. Predictions describe patterns in this small sample and
+are not guarantees of an individual's behaviour.
+
 ## Dataset Summary
 
 * **Filename**: `Social_Network_Ads.xls`
@@ -86,6 +140,11 @@ Metrics used for evaluation:
 * **Confusion Matrix**
 
 A **bar chart** was generated to compare F1 scores across models visually.
+
+The evaluation table above describes the preserved notebook analysis. The web
+application retrains the three models with its own reproducible preprocessing
+pipeline and displays the metrics returned by the live Flask API, rather than
+assuming the notebook's reported values.
 
 ---
 
